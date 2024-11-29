@@ -17,12 +17,17 @@ namespace BlockchainApp.Controllers
         [HttpPost("transfer")]
         public async Task<IActionResult> Transfer([FromBody] CreateTransactionDto dto)
         {
-            var transaction = await _transactionService.CreateTransactionAsync(dto.FromAddress, dto.ToAddress, dto.Amount, dto.Fee,dto.Signature);
-            if (transaction == null)
+            var success = await _transactionService.CreateTransactionPublicKeyAsync(dto.FromAddress, dto.ToAddress, dto.Amount, dto.Fee, dto.Signature, dto.PublicKey);
+
+            if (success != null)
             {
-                return BadRequest("Transaction failed.");
+                //return Ok(new { message = $"Transaction will be added to Block {Blockchain.GetLastBlock().Id + 1}" });
+                return Ok(new { message = $"Transaction will be added to Block {success.BlockId + 1}" });
             }
-            return Ok(transaction);
+            else
+            {
+                return BadRequest(new { message = "Invalid transaction" });
+            }
         }
 
         [HttpGet("{id}")]

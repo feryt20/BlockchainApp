@@ -13,15 +13,15 @@ namespace BlockchainApp.Models
         public int? Proof { get; set; }
         public List<Transaction> Transactions { get; set; }
 
-        public string ComputeHash()
-        {
-            var blockData = JsonConvert.SerializeObject(this);
-            using (var sha256 = SHA256.Create())
-            {
-                var bytes = Encoding.UTF8.GetBytes(blockData);
-                var hash = sha256.ComputeHash(bytes);
-                return Convert.ToBase64String(hash);
-            }
-        }
+        //public string ComputeHash()
+        //{
+        //    var blockData = JsonConvert.SerializeObject(this);
+        //    using (var sha256 = SHA256.Create())
+        //    {
+        //        var bytes = Encoding.UTF8.GetBytes(blockData);
+        //        var hash = sha256.ComputeHash(bytes);
+        //        return Convert.ToBase64String(hash);
+        //    }
+        //}
     }
 }
