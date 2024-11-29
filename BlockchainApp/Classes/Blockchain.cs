@@ -51,7 +51,7 @@
 
 //            return GetLastBlock().Id + 1;
 //        }
-//        public bool AddTransaction(string sender, string recipient, int amount, string signature, string publicKey)
+//        public bool AddTransaction(string sender, string recipient, decimal amount, string signature, string publicKey)
 //        {
 //            var transaction = new Transaction
 //            {
@@ -141,7 +141,7 @@
 
 //            return balance;
 //        }
-       
+
 //        public Block CreateBlock(int proof, string previousHash, string validator)
 //        {
 //            var block = new Block

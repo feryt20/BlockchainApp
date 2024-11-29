@@ -1,22 +1,21 @@
 ﻿//using BlockchainApp.Classes;
 //using BlockchainApp.Models;
-//using BlockchainApp.ViewModels;
 //using Microsoft.AspNetCore.Mvc;
 
 //namespace BlockchainApp.Controllers
 //{
 //    [Route("api/[controller]")]
 //    [ApiController]
-//    public class BlockchainController : ControllerBase
+//    public class Blockchain2Controller : ControllerBase
 //    {
 //        private static readonly Blockchain Blockchain = new Blockchain();
 
 //        [HttpPost("generatekey")]
-//        public ActionResult<object> GenerateKeys([FromBody] TransactionModel transaction)
+//        public ActionResult<object> GenerateKeys([FromBody] Transaction transaction)
 //        {
 //            var (publicKey, privateKey) = RSAKeyGenerator.GenerateKeys();
 //            var digitalSignature = new DigitalSignature();
-//            var data = $"{transaction.Sender}{transaction.Recipient}{transaction.Amount}";
+//            var data = $"{transaction.FromAddress}{transaction.ToAddress}{transaction.Amount}";
 //            var signature = digitalSignature.SignData(data, privateKey);
 //            return Ok(new { publicKey, privateKey, signature });
 //        }
@@ -37,9 +36,9 @@
 //        }
 
 //        [HttpPost("transactions/new1")]
-//        public ActionResult<object> CreateTransaction([FromBody] TransactionModel transaction)
+//        public ActionResult<object> CreateTransaction([FromBody] Transaction transaction)
 //        {
-//            var index = Blockchain.AddTransaction(transaction.Sender, transaction.Recipient, transaction.Amount);
+//            var index = Blockchain.AddTransaction(transaction.FromAddress, transaction.ToAddress, transaction.Amount);
 //            return Ok(new { message = $"Transaction will be added to Block {index}" });
 //        }
 
@@ -58,9 +57,9 @@
 //        //*** contracts
 
 //        [HttpPost("transactions/new")]
-//        public ActionResult<object> CreateTransactionNew([FromBody] TransactionModel transactionModel)
+//        public ActionResult<object> CreateTransactionNew([FromBody] Transaction transactionModel)
 //        {
-//            var success = Blockchain.AddTransaction(transactionModel.Sender, transactionModel.Recipient, transactionModel.Amount, transactionModel.Signature, transactionModel.PublicKey);
+//            var success = Blockchain.AddTransaction(transactionModel.FromAddress, transactionModel.ToAddress, transactionModel.Amount, transactionModel.Signature, transactionModel.PublicKey);
 //            if (success)
 //            {
 //                return Ok(new { message = $"Transaction will be added to Block {Blockchain.GetLastBlock().Id + 1}" });
