@@ -31,7 +31,7 @@ namespace BlockchainApp.Controllers
         {
             var (publicKey, privateKey) = RSAKeyGenerator.GenerateKeys();
             var digitalSignature = new DigitalSignature();
-            var data = $"{transaction.FromAddress}{transaction.ToAddress}{transaction.Amount}";
+            var data = $"{transaction.FromPrivateAddress}{transaction.ToAddress}{transaction.Amount}";
             var signature = digitalSignature.SignData(data, privateKey);
             return Ok(new { publicKey, privateKey, signature });
         }

@@ -17,7 +17,7 @@ namespace BlockchainApp.Controllers
         [HttpPost("transfer")]
         public async Task<IActionResult> Transfer([FromBody] CreateTransactionDto dto)
         {
-            var success = await _transactionService.CreateTransactionPublicKeyAsync(dto.FromAddress, dto.ToAddress, dto.Amount, dto.Fee, dto.Signature, dto.PublicKey);
+            var success = await _transactionService.CreateTransactionPublicKeyAsync(dto.FromPrivateAddress, dto.ToAddress, dto.Amount, dto.Fee, dto.Signature, dto.PublicKey);
 
             if (success != null)
             {
@@ -51,7 +51,7 @@ namespace BlockchainApp.Controllers
 
     public class CreateTransactionDto
     {
-        public string FromAddress { get; set; }
+        public string FromPrivateAddress { get; set; }
         public string ToAddress { get; set; }
         public decimal Amount { get; set; }
         public decimal Fee { get; set; }

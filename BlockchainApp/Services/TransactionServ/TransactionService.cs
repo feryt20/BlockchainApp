@@ -59,9 +59,9 @@ namespace BlockchainApp.Services.TransactionServ
         }
 
 
-        public async Task<Transaction> CreateTransactionPublicKeyAsync(string fromAddress, string toAddress, decimal amount, decimal fee, string? signature, string? publicKey)
+        public async Task<Transaction> CreateTransactionPublicKeyAsync(string fromPrivateAddress, string toAddress, decimal amount, decimal fee, string? signature, string? publicKey)
         {
-            var fromUser = await _context.Users.SingleOrDefaultAsync(u => u.Address == fromAddress);
+            var fromUser = await _context.Users.SingleOrDefaultAsync(u => u.PrivateKey == fromPrivateAddress);
             var toUser = await _context.Users.SingleOrDefaultAsync(u => u.Address == toAddress);
 
             if (fromUser == null || toUser == null || fromUser.Balance < amount + fee)
@@ -74,7 +74,7 @@ namespace BlockchainApp.Services.TransactionServ
 
             var transaction = new Transaction
             {
-                FromAddress = fromAddress,
+                FromAddress = fromUser.Address,
                 ToAddress = toAddress,
                 Amount = amount,
                 Fee = fee,
@@ -85,7 +85,7 @@ namespace BlockchainApp.Services.TransactionServ
                 PublicKey = publicKey
             };
 
-            var data = $"{fromAddress}{toAddress}{amount}";
+            var data = $"{fromPrivateAddress}{toAddress}{amount}";
             var digitalSignature = new DigitalSignature();
             if (digitalSignature.VerifyData(data, publicKey, signature))
             {
