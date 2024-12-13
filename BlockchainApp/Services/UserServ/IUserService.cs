@@ -6,5 +6,6 @@ namespace BlockchainApp.Services.UserServ
     {
         Task<User> RegisterUserAsync(string password);
         Task<User> GetUserByAddressAsync(string address);
+        Task<string?> GetUserPrivateKeyAsync(string address, string password);
     }
 }

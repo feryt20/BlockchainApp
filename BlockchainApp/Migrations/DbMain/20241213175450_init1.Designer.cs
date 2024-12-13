@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlockchainApp.Migrations.DbMain
 {
     [DbContext(typeof(BlockchainContext))]
-    [Migration("20240717141538_init1")]
+    [Migration("20241213175450_init1")]
     partial class init1
     {
         /// <inheritdoc />
@@ -117,6 +117,10 @@ namespace BlockchainApp.Migrations.DbMain
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrivateKey")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

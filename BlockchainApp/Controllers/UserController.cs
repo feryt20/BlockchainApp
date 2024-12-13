@@ -35,6 +35,16 @@ namespace BlockchainApp.Controllers
             }
             return Ok(user);
         }
+        [HttpGet("GetPrivateKey/{address}/{password}")]
+        public async Task<IActionResult> GetPrivateKey(string address,string password)
+        {
+            var user = await _userService.GetUserPrivateKeyAsync(address,password);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
     }
 
     public class RegisterUserDto

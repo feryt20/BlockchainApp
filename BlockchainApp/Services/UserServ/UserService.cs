@@ -18,6 +18,7 @@ namespace BlockchainApp.Services.UserServ
             var user = new User
             {
                 Address = GenerateAddress(),
+                PrivateKey = GenerateAddress(),
                 PasswordHash = HashPassword(password),
                 Balance = 1000
             };
@@ -31,6 +32,19 @@ namespace BlockchainApp.Services.UserServ
             return await _context.Users.SingleOrDefaultAsync(u => u.Address == address);
         }
 
+        public async Task<string?> GetUserPrivateKeyAsync(string address, string password)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Address == address);
+            if (user != null)
+            {
+                if (IsMatchPassword(password, user.PasswordHash))
+                {
+                    return user.PrivateKey;
+                }
+            }
+            return null;
+        }
+
         private string GenerateAddress()
         {
             return Guid.NewGuid().ToString().Replace("-", "");
@@ -39,6 +53,12 @@ namespace BlockchainApp.Services.UserServ
         private string HashPassword(string password)
         {
             return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        private bool IsMatchPassword(string password, string hashKey)
+        {
+            bool isMatch = BCrypt.Net.BCrypt.Verify(password, hashKey);
+            return isMatch;
         }
     }
 }

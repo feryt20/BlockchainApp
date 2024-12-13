@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Migrations\DbMain\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
 
